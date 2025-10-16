@@ -116,22 +116,22 @@
         /* Song page styles */
         .song-container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
             max-width: 90%;
         }
         .song-card {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            padding: 15px;
-            margin: 10px 0;
-            width: 100%;
-            max-width: 400px;
+            padding: 10px;
+            width: 45%;
+            max-width: 200px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         audio {
             width: 100%;
-            margin-top: 10px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -152,19 +152,19 @@
         <button id="nextBtn1">Next ➡️</button>
     </div>
 
-    <!-- Page 2 -->
+    <!-- Page 2: Note by Heart -->
     <div class="page" id="page2">
-        <h1>🌸 Memories 🌸</h1>
-        <img src="images/photo5.jpg" alt="Memory 1">
-        <img src="images/photo6.jpg" alt="Memory 2">
-        <img src="images/photo7.jpg" alt="Memory 3">
+        <h1>💌 Note by Heart 💌</h1>
+        <p style="max-width:320px; color:#fff; font-size:17px">babu tere bina sab boring lagta hai , you are the most wonderfull person in my life.</p>
+        <img src="images/notePhoto.jpg" alt="Note Photo">
         <button id="nextBtn2">Next ➡️</button>
     </div>
 
-    <!-- Page 3 -->
+    <!-- Page 3: Kissi For you Moti with GIF -->
     <div class="page" id="page3">
-        <h1>💌 A Note 💌</h1>
-        <p style="max-width:320px; color:#fff; font-size:17px">Vaishu, you mean the world to me... ❤️</p>
+        <h1>💌 Kissi For you Moti 💌</h1>
+        <p style="max-width:320px; color:#fff; font-size:17px">Kissi For you Moti</p>
+        <img src="images/yourGIF.gif" alt="GIF for you">  <!-- Replace with your GIF file, e.g., a heart or kiss GIF -->
         <button id="nextBtn3">Next ➡️</button>
     </div>
 
@@ -177,35 +177,35 @@
         <button id="nextBtn4">Next ➡️</button>
     </div>
 
-    <!-- Page 5: Improved Song Page -->
+    <!-- Page 5: Songs -->
     <div class="page" id="page5">
         <h1>🎵 Songs I Dedicate to You 🎵</h1>
-        <p>Here’s a list of 5 songs that remind me of us. Each one has a special meaning!</p>
+        <p>Here’s a list of 5 songs that remind me of us.</p>
         <div class="song-container">
             <div class="song-card">
                 <h3>1. Song Title 1</h3>
-                <p>Your dedication here, e.g., "This one reminds me of our first date..."</p>
-                <audio controls src="music/song1.mp3"></audio>  <!-- Replace with your first song file -->
+                <p>Your dedication here...</p>
+                <audio controls src="music/song1.mp3"></audio>
             </div>
             <div class="song-card">
                 <h3>2. Song Title 2</h3>
                 <p>Dedication for song 2...</p>
-                <audio controls src="music/song2.mp3"></audio>  <!-- Replace with your second song file -->
+                <audio controls src="music/song2.mp3"></audio>
             </div>
             <div class="song-card">
                 <h3>3. Song Title 3</h3>
                 <p>Dedication for song 3...</p>
-                <audio controls src="music/song3.mp3"></audio>  <!-- Replace with your third song file -->
+                <audio controls src="music/song3.mp3"></audio>
             </div>
             <div class="song-card">
                 <h3>4. Song Title 4</h3>
                 <p>Dedication for song 4...</p>
-                <audio controls src="music/song4.mp3"></audio>  <!-- Replace with your fourth song file -->
+                <audio controls src="music/song4.mp3"></audio>
             </div>
             <div class="song-card">
                 <h3>5. Song Title 5</h3>
                 <p>Dedication for song 5...</p>
-                <audio controls src="music/song5.mp3"></audio>  <!-- Replace with your fifth song file -->
+                <audio controls src="music/song5.mp3"></audio>
             </div>
         </div>
         <p>These songs are all for you, Vaishnavi. ❤️</p>
