@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Happy Birthday Vaishnavi 🎉</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+        .page {
+            display: none;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.6s;
+        }
+        img {
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            margin: 12px 0;
+        }
+        button {
+            background: #ff6f91;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 28px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 14px;
+        }
+        #playPause {
+            position: fixed;
+            right: 16px;
+            bottom: 18px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        .gif-float {
+            animation: float 4s infinite;
+        }
+
+        /* Floating GIFs styles */
+        .floating-gifs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .floating-gifs .gif1 {
+            position: absolute;
+            width: 80px;
+            left: 10%;
+            animation: floatPath1 15s linear infinite;
+        }
+        .floating-gifs .gif2 {
+            position: absolute;
+            width: 80px;
+            left: 50%;
+            animation: floatPath2 18s linear infinite;
+        }
+        .floating-gifs .gif3 {
+            position: absolute;
+            width: 80px;
+            left: 90%;
+            animation: floatPath3 20s linear infinite;
+        }
+        @keyframes floatPath1 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(20vw, 50vh); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes floatPath2 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(-10vw, 70vh); }
+            100% { transform: translate(0, 0); }
+        }
+        @keyframes floatPath3 {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(30vw, 30vh); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Song page styles */
+        .song-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 90%;
+        }
+        .song-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating GIFs -->
+    <div class="floating-gifs">
+        <img src="images/cake.gif" class="gif gif-float gif1" alt="Cake GIF">
+        <img src="images/confetti.gif" class="gif gif-float gif2" alt="Confetti GIF">
+        <img src="images/balloons.gif" class="gif gif-float gif3" alt="Balloons GIF">
+    </div>
+
+    <!-- Page 1 -->
+    <div class="page active" id="page1">
+        <h1>🎂 Happy Birthday Vaishnavi 💖</h1>
+        <h2>You’re my sunshine ☀️</h2>
+        <img src="images/photo4.jpg" alt="Vaishnavi">
+        <button id="nextBtn1">Next ➡️</button>
+    </div>
+
+    <!-- Page 2 -->
+    <div class="page" id="page2">
+        <h1>🌸 Memories 🌸</h1>
+        <img src="images/photo5.jpg" alt="Memory 1">
+        <img src="images/photo6.jpg" alt="Memory 2">
+        <img src="images/photo7.jpg" alt="Memory 3">
+        <button id="nextBtn2">Next ➡️</button>
+    </div>
+
+    <!-- Page 3 -->
+    <div class="page" id="page3">
+        <h1>💌 A Note 💌</h1>
+        <p style="max-width:320px; color:#fff; font-size:17px">Vaishu, you mean the world to me... ❤️</p>
+        <button id="nextBtn3">Next ➡️</button>
+    </div>
+
+    <!-- Page 4 -->
+    <div class="page" id="page4">
+        <h1>🎉 Surprise! 🎉</h1>
+        <img src="images/photo3.jpg" alt="Surprise">
+        <h2>Happy Birthday, my love 💖</h2>
+        <p>That's the end of the surprise so far!</p>
+        <button id="nextBtn4">Next ➡️</button>
+    </div>
+
+    <!-- Page 5: Improved Song Page -->
+    <div class="page" id="page5">
+        <h1>🎵 Songs I Dedicate to You 🎵</h1>
+        <p>Here’s a list of 5 songs that remind me of us. Each one has a special meaning!</p>
+        <div class="song-container">
+            <div class="song-card">
+                <h3>1. Song Title 1</h3>
+                <p>Your dedication here, e.g., "This one reminds me of our first date..."</p>
+                <audio controls src="music/song1.mp3"></audio>  <!-- Replace with your first song file -->
+            </div>
+            <div class="song-card">
+                <h3>2. Song Title 2</h3>
+                <p>Dedication for song 2...</p>
+                <audio controls src="music/song2.mp3"></audio>  <!-- Replace with your second song file -->
+            </div>
+            <div class="song-card">
+                <h3>3. Song Title 3</h3>
+                <p>Dedication for song 3...</p>
+                <audio controls src="music/song3.mp3"></audio>  <!-- Replace with your third song file -->
+            </div>
+            <div class="song-card">
+                <h3>4. Song Title 4</h3>
+                <p>Dedication for song 4...</p>
+                <audio controls src="music/song4.mp3"></audio>  <!-- Replace with your fourth song file -->
+            </div>
+            <div class="song-card">
+                <h3>5. Song Title 5</h3>
+                <p>Dedication for song 5...</p>
+                <audio controls src="music/song5.mp3"></audio>  <!-- Replace with your fifth song file -->
+            </div>
+        </div>
+        <p>These songs are all for you, Vaishnavi. ❤️</p>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="music/birthday.mp3" type="audio/mpeg">
+        Your browser does not support audio.
+    </audio>
+
+    <!-- Play/Pause Button -->
+    <button id="playPause" title="Play/Pause">▶️</button>
+
+    <script>
+        // Page switching
+        let current = 1;
+        const total = 5;
+        function showPage(n) {
+            for(let i = 1; i <= total; i++) {
+                document.getElementById('page' + i).classList.remove('active');
+            }
+            document.getElementById('page' + n).classList.add('active');
+        }
+        function nextPage() {
+            current = current + 1 > total ? total : current + 1;
+            showPage(current);
+        }
+        document.getElementById('nextBtn1').onclick = function() { startMusic(); nextPage(); };
+        document.getElementById('nextBtn2').onclick = nextPage;
+        document.getElementById('nextBtn3').onclick = nextPage;
+        document.getElementById('nextBtn4').onclick = nextPage;
+
+        // Music control
+        const audio = document.getElementById('bg-music');
+        const playBtn = document.getElementById('playPause');
+
+        function updatePlayIcon() {
+            playBtn.textContent = audio.paused ? '▶️' : '⏸️';
+        }
+
+        function startMusic() {
+            if (!audio) return;
+            audio.play().then(() => { updatePlayIcon(); }).catch(err => {
+                console.warn('Play failed:', err);
+                alert('Music could not start automatically. Tap the round button to play.');
+                updatePlayIcon();
+            });
+        }
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().then(() => { updatePlayIcon(); }).catch(err => {
+                    console.warn('Play error:', err);
+                    alert('Unable to play. Check that music/birthday.mp3 exists.');
+                });
+            } else {
+                audio.pause();
+                updatePlayIcon();
+            }
+        });
+
+        audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            alert('Audio file not found or invalid. Upload your mp3 to music/birthday.mp3.');
+        });
+
+        updatePlayIcon();
+    </script>
+</body>
+</html>
