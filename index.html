@@ -4,27 +4,87 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Happy Birthday Vaishnavi 🎉</title>
+    <!-- Fancy fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto+Slab:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        :root { --text-stroke: 0.6px rgba(0,0,0,0.24); }
+        /* apply a default stroke to main text elements for a bolder look */
+        h1, h2, button, p, a, .song-row .meta .title, .song-row .meta .artist, .song-row .rank, #secretMessage { -webkit-text-stroke: var(--text-stroke); }
+
         body {
             margin: 0;
             font-family: Poppins, sans-serif;
-            background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+            /* richer layered background */
+            background: radial-gradient(circle at 10% 10%, rgba(255,250,240,0.18), transparent 12%),
+                        linear-gradient(135deg, #ff6fb5 0%, #ffd36e 40%, #7ee8fa 100%);
             color: #fff;
             text-align: center;
             overflow: hidden;
+            position: relative;
         }
+        /* Typography enhancements */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            /* brighter clipped gradient with subtle stroke */
+            background: linear-gradient(90deg, #fff8e6 0%, #ffd6e0 40%, #ff9ac2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            /* use variable stroke */
+            -webkit-text-stroke: var(--text-stroke);
+            text-shadow: 0 4px 14px rgba(0,0,0,0.22);
+            margin: 6px 0 4px;
+        }
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: rgba(255,255,255,0.95);
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        /* Button style tweak */
+        button {
+            font-family: 'Poppins', sans-serif;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.22);
+            backdrop-filter: blur(6px);
+            background: linear-gradient(90deg,#ff7aa2,#ffb86b);
+            border: 1px solid rgba(255,255,255,0.12);
+        }
+        /* Song title styling */
+        .song-row .meta .title {
+            font-family: 'Roboto Slab', serif;
+            color: #fff;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+            -webkit-text-stroke: var(--text-stroke);
+        }
+        .song-row .meta .artist { font-family: 'Poppins', sans-serif; -webkit-text-stroke: var(--text-stroke); }
+        /* Secret message styling */
+        #secretMessage {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06));
+            border: 1px solid rgba(255,255,255,0.12);
+            transform: translateY(20px);
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+        #secretMessage.show { transform: translateY(0); opacity: 1; }
         .page {
             display: none;
             height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
         .active {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.6s;
+            opacity: 1;
         }
         img {
             max-width: 90%;
@@ -41,24 +101,13 @@
             font-size: 16px;
             cursor: pointer;
             margin-top: 14px;
+            transition: transform 0.2s ease;
         }
-        #playPause {
-            position: fixed;
-            right: 16px;
-            bottom: 18px;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+        button:hover {
+            transform: scale(1.05);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        /* play button removed: autoplay is used instead */
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
@@ -79,38 +128,34 @@
             overflow: hidden;
             z-index: 1;
         }
-        .floating-gifs .gif1 {
-            position: absolute;
-            width: 80px;
-            left: 10%;
-            animation: floatPath1 15s linear infinite;
-        }
-        .floating-gifs .gif2 {
-            position: absolute;
-            width: 80px;
-            left: 50%;
-            animation: floatPath2 18s linear infinite;
-        }
+        .floating-gifs .gif1,
+        .floating-gifs .gif2,
         .floating-gifs .gif3 {
             position: absolute;
             width: 80px;
-            left: 90%;
-            animation: floatPath3 20s linear infinite;
+            animation: floatPath 15s linear infinite;
         }
-        @keyframes floatPath1 {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(20vw, 50vh); }
-            100% { transform: translate(0, 0); }
+        .floating-gifs .gif1 { left: 10%; animation-delay: 0s; }
+        .floating-gifs .gif2 { left: 50%; animation-delay: 5s; }
+        .floating-gifs .gif3 { left: 90%; animation-delay: 10s; }
+
+        @keyframes floatPath {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-50vh); opacity: 0.8; }
+            100% { transform: translateY(0); opacity: 1; }
         }
-        @keyframes floatPath2 {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(-10vw, 70vh); }
-            100% { transform: translate(0, 0); }
+
+        /* Floating hearts / sparkles */
+        .heart {
+            position: fixed;
+            color: #ffb6c1;
+            font-size: 20px;
+            pointer-events: none;
+            animation: floatUp 4s linear infinite;
         }
-        @keyframes floatPath3 {
-            0% { transform: translate(0, 0); }
-            50% { transform: translate(30vw, 30vh); }
-            100% { transform: translate(0, 0); }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
 
         /* Song page styles */
@@ -133,18 +178,109 @@
             width: 100%;
             margin-top: 5px;
         }
+        /* New compact list styles */
+        .song-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
+        .song-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px;
+        }
+        .song-row.active-row { background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); }
+        .song-row .rank {
+            width: 28px;
+            text-align: center;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            opacity: 0.95;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .song-row .thumb {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .song-row .meta { flex: 1; text-align: left; }
+        .song-row .meta .title { font-size: 16px; font-weight: 600; font-family: 'Roboto Slab', serif; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.45); -webkit-text-stroke: 0.4px rgba(0,0,0,0.18); }
+        .song-row .meta .artist { font-size: 13px; opacity: 0.9; margin-top: 2px; font-family: 'Poppins', sans-serif; color: rgba(255,255,255,0.9); }
+        .mini-audio { width: 72px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+
+        /* Hidden message */
+        #secretMessage {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+            padding: 12px 20px;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 18px;
+            backdrop-filter: blur(8px);
+            display: none;
+            animation: fadeIn 1s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+            -webkit-text-stroke: 0.3px rgba(0,0,0,0.12);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📱 Mobile-friendly adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            p { font-size: 15px; }
+            img { max-width: 95%; }
+            button {
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+            .song-card {
+                width: 90%;
+                max-width: 320px;
+                padding: 8px;
+                border-radius: 12px;
+            }
+            .song-card h3 { font-size: 16px; margin: 6px 0; }
+            .song-card p { font-size: 13px; margin: 4px 0; }
+            .song-card audio { height: 36px; }
+            /* Adjust list rows on mobile */
+            .song-list { gap: 6px; }
+            .song-row { padding: 6px 8px; }
+            .song-row .rank { width: 22px; font-size: 14px; }
+            .song-row .thumb { width: 40px; height: 40px; }
+            .song-row .meta .title { font-size: 15px; }
+            .mini-audio { width: 64px; height: 26px; }
+        }
     </style>
 </head>
 <body>
 
     <!-- Floating GIFs -->
     <div class="floating-gifs">
-        <img src="images/cake.gif" class="gif gif-float gif1" alt="Cake GIF">
-        <img src="images/confetti.gif" class="gif gif-float gif2" alt="Confetti GIF">
-        <img src="images/balloons.gif" class="gif gif-float gif3" alt="Balloons GIF">
+        <img src="images/1.gif" class="gif gif-float gif1" alt="Cake GIF">
+        <img src="images/2.gif" class="gif gif-float gif2" alt="Confetti GIF">
+        <img src="images/3.gif" class="gif gif-float gif3" alt="Balloons GIF">
     </div>
 
-    <!-- Page 1 -->
+    <!-- Secret message -->
+    <div id="secretMessage">💖 I Love You 💖</div>
+
+    <!-- Pages -->
     <div class="page active" id="page1">
         <h1>🎂 Happy Birthday Vaishnavi 💖</h1>
         <h2>You’re my kuchupuchu ☀️</h2>
@@ -152,128 +288,165 @@
         <button id="nextBtn1">Next ➡️</button>
     </div>
 
-    <!-- Page 2: Note by Heart -->
     <div class="page" id="page2">
         <h1>💌 Note by Heart 💌</h1>
-        <p style="max-width:320px; color:#fff; font-size:17px">Babu tere bina sab boring lagta hai , you are the most wonderfull person in my life.</p>
-        <img src="images/notePhoto.jpg" alt="Note Photo">
+        <p style="max-width:320px;">Babu tere bina sab boring lagta hai , you are the most wonderful person in my life.</p>
+        <img src="images/notePhoto.gif" alt="Note Photo">
         <button id="nextBtn2">Next ➡️</button>
     </div>
 
-    <!-- Page 3: Kissi For you Moti with GIF -->
     <div class="page" id="page3">
         <h1>💌 Kissi For you Moti 💌</h1>
-        <p style="max-width:320px; color:#fff; font-size:17px">😘</p>
-        <img src="images/yourGIF.gif" alt="GIF for you">  <!-- Replace with your GIF file, e.g., a heart or kiss GIF -->
+        <p style="max-width:320px;">😘</p>
+        <img src="images/yourGIF.gif" alt="GIF for you">
         <button id="nextBtn3">Next ➡️</button>
     </div>
 
-    <!-- Page 4 -->
     <div class="page" id="page4">
-        <h1>🎉 Surprise! 🎉</h1>
-        <img src="images/photo3.jpg" alt="Surprise">
-        <h2>Happy Birthday, my love 💖</h2>
-        <p>That's the end of the surprise so far!</p>
-        <button id="nextBtn4">Next ➡️</button>
-    </div>
-
-    <!-- Page 5: Songs -->
-    <div class="page" id="page5">
-        <h1>🎵 Songs I Dedicate to You 🎵</h1>
+        <h1> Songs I Dedicate to You 🎵</h1>
         <p>Here’s a list of 5 songs that remind me of us.</p>
         <div class="song-container">
-            <div class="song-card">
-                <h3>1. Song Title 1</h3>
-                <p>Your dedication here...</p>
-                <audio controls src="music/song1.mp3"></audio>
-            </div>
-            <div class="song-card">
-                <h3>2. Song Title 2</h3>
-                <p>Dedication for song 2...</p>
-                <audio controls src="music/song2.mp3"></audio>
-            </div>
-            <div class="song-card">
-                <h3>3. Song Title 3</h3>
-                <p>Dedication for song 3...</p>
-                <audio controls src="music/song3.mp3"></audio>
-            </div>
-            <div class="song-card">
-                <h3>4. Song Title 4</h3>
-                <p>Dedication for song 4...</p>
-                <audio controls src="music/song4.mp3"></audio>
-            </div>
-            <div class="song-card">
-                <h3>5. Song Title 5</h3>
-                <p>Dedication for song 5...</p>
-                <audio controls src="music/song5.mp3"></audio>
+            <div class="song-list">
+                <div class="song-row">
+                    <div class="rank">1</div>
+                    <img class="thumb" src="images/thumb1.jpg" alt="thumb1">
+                    <div class="meta">
+                        <div class="title">Iktara</div>
+                        <div class="artist">Amit Trivedi, K... </div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song1.mp3"></audio>
+                </div>
+                <div class="song-row active-row">
+                    <div class="rank">2</div>
+                    <img class="thumb" src="images/thumb2.jpg" alt="thumb2">
+                    <div class="meta">
+                        <div class="title">Mere Sohneya</div>
+                        <div class="artist">Sachet Tandon, P...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song2.mp3"></audio>
+                </div>
+                <div class="song-row">
+                    <div class="rank">3</div>
+                    <img class="thumb" src="images/thumb3.jpg" alt="thumb3">
+                    <div class="meta">
+                        <div class="title">Dhadak - Title ...</div>
+                        <div class="artist">Ajay Gogavale, S...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song3.mp3"></audio>
+                </div>
+                <div class="song-row">
+                    <div class="rank">4</div>
+                    <img class="thumb" src="images/thumb4.jpg" alt="thumb4">
+                    <div class="meta">
+                        <div class="title">Dil Dardeh</div>
+                        <div class="artist">Sukha, The Proph...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song4.mp3"></audio>
+                </div>
+                <div class="song-row">
+                    <div class="rank">5</div>
+                    <img class="thumb" src="images/thumb5.jpg" alt="thumb5">
+                    <div class="meta">
+                        <div class="title">Ishq</div>
+                        <div class="artist">Faheem Abdu...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song5.mp3"></audio>
+                </div>
             </div>
         </div>
         <p>These songs are all for you, Vaishnavi. ❤️</p>
+        <button id="nextBtn4">Next ➡️</button>
+    </div>
+
+    <div class="page" id="page5">
+        <h1>🎉 Surprise! 🎉</h1>
+        <img src="images/photo3.gif" alt="Surprise">
+        <h2>Happy Birthday, my love 💖</h2>
+        <p>That's the end of the surprise so far!</p>
+        <button id="restartBtn">Start Over ⤴️</button>
     </div>
 
     <!-- Audio -->
     <audio id="bg-music" loop preload="auto">
         <source src="music/birthday.mp3" type="audio/mpeg">
-        Your browser does not support audio.
     </audio>
 
-    <!-- Play/Pause Button -->
-    <button id="playPause" title="Play/Pause">▶️</button>
+    <!-- Autoplay hint (shown only if autoplay is blocked) -->
+    <div id="autoplayHint" style="position:fixed; right:16px; bottom:18px; background:rgba(0,0,0,0.4); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; display:none; z-index:999;">Tap to start music ▶️</div>
 
     <script>
-        // Page switching
+    // Page switching
         let current = 1;
         const total = 5;
         function showPage(n) {
-            for(let i = 1; i <= total; i++) {
-                document.getElementById('page' + i).classList.remove('active');
-            }
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page' + n).classList.add('active');
         }
         function nextPage() {
             current = current + 1 > total ? total : current + 1;
             showPage(current);
         }
+
         document.getElementById('nextBtn1').onclick = function() { startMusic(); nextPage(); };
         document.getElementById('nextBtn2').onclick = nextPage;
         document.getElementById('nextBtn3').onclick = nextPage;
         document.getElementById('nextBtn4').onclick = nextPage;
-
-        // Music control
-        const audio = document.getElementById('bg-music');
-        const playBtn = document.getElementById('playPause');
-
-        function updatePlayIcon() {
-            playBtn.textContent = audio.paused ? '▶️' : '⏸️';
+        // Restart button on last page -> go to first page
+        const restartBtn = document.getElementById('restartBtn');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', () => {
+                current = 1;
+                showPage(1);
+                // optionally restart background music
+                startMusic();
+            });
         }
-
+        // Music control: attempt autoplay, fallback to hint
+        const audio = document.getElementById('bg-music');
+        const autoplayHint = document.getElementById('autoplayHint');
         function startMusic() {
-            if (!audio) return;
-            audio.play().then(() => { updatePlayIcon(); }).catch(err => {
-                console.warn('Play failed:', err);
-                alert('Music could not start automatically. Tap the round button to play.');
-                updatePlayIcon();
+            return audio.play().then(() => {
+                autoplayHint.style.display = 'none';
+            }).catch(() => {
+                // Autoplay blocked: show hint to let the user start playback
+                autoplayHint.style.display = 'block';
             });
         }
 
-        playBtn.addEventListener('click', () => {
-            if (audio.paused) {
-                audio.play().then(() => { updatePlayIcon(); }).catch(err => {
-                    console.warn('Play error:', err);
-                    alert('Unable to play. Check that music/birthday.mp3 exists.');
-                });
-            } else {
-                audio.pause();
-                updatePlayIcon();
+        // Try to autoplay on load
+        window.addEventListener('load', () => {
+            startMusic();
+        });
+
+        // Make the hint clickable to start music
+        autoplayHint.addEventListener('click', () => {
+            startMusic();
+        });
+
+        // Floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = ['💖','💞','💗','💓','✨'][Math.floor(Math.random()*5)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (3 + Math.random() * 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        setInterval(createHeart, 800);
+
+        // Hidden message trigger (triple tap anywhere on document)
+        let tapCount = 0;
+        document.addEventListener('click', () => {
+            tapCount++;
+            if (tapCount === 3) {
+                const msg = document.getElementById('secretMessage');
+                msg.classList.add('show');
+                setTimeout(() => msg.classList.remove('show'), 4000);
+                tapCount = 0;
             }
+            setTimeout(() => tapCount = 0, 1500);
         });
-
-        audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            alert('Audio file not found or invalid. Upload your mp3 to music/birthday.mp3.');
-        });
-
-        updatePlayIcon();
     </script>
 </body>
 </html>
