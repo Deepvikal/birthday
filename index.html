@@ -173,6 +173,13 @@
     #page5 { background: linear-gradient(180deg, rgba(255,250,240,0.06), rgba(255,240,250,0.02)), linear-gradient(135deg,#fbc2eb,#a6c1ee); }
     #page6 { background: linear-gradient(180deg, rgba(20,10,30,0.08), rgba(10,5,15,0.02)), linear-gradient(135deg,#ffd36e,#ff9ab3); }
 
+        /* Ensure Note page text is highly readable on pastel background */
+        #page3 h1, #page3 p {
+            color: #07282b; /* deep teal for contrast */
+            -webkit-text-stroke: 0.6px rgba(255,255,255,0.85);
+            text-shadow: 0 2px 6px rgba(255,255,255,0.6);
+        }
+
         /* Intro page hero styles */
         #page1 h1 {
             font-size: 62px;
@@ -397,7 +404,7 @@
     <div class="page" id="page3">
         <h1>💌 Note by Heart 💌</h1>
         <p style="max-width:320px;">Babu tere bina sab boring lagta hai , you are the most wonderful person in my life.</p>
-        <img src="images/notephoto.png" alt="Note Photo">
+        <img src="images/notephoto.gif" alt="Note Photo">
         <button id="nextBtn3">Next ➡️</button>
     </div>
 
