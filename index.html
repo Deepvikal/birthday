@@ -477,13 +477,7 @@
         <button id="restartBtn">Start Over ⤴️</button>
     </div>
 
-    <!-- Audio -->
-    <audio id="bg-music" loop preload="auto">
-        <source src="music/birthday.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Autoplay hint (shown only if autoplay is blocked) -->
-    <div id="autoplayHint" style="position:fixed; right:16px; bottom:18px; background:rgba(0,0,0,0.4); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; display:none; z-index:9000;">Tap to start music ▶️</div>
+    <!-- background music removed per request -->
 
     <script>
     // Page switching
@@ -498,7 +492,7 @@
             showPage(current);
         }
 
-    document.getElementById('nextBtn1').onclick = function() { startMusic(); nextPage(); };
+    document.getElementById('nextBtn1').onclick = function() { nextPage(); };
     document.getElementById('nextBtn2').onclick = nextPage;
     document.getElementById('nextBtn3').onclick = nextPage;
     document.getElementById('nextBtn4').onclick = nextPage;
@@ -511,70 +505,9 @@
             restartBtn.addEventListener('click', () => {
                 current = 1;
                 showPage(1);
-                // optionally restart background music
-                startMusic();
             });
         }
-        // Music control: attempt autoplay, fallback to hint
-        const audio = document.getElementById('bg-music');
-        const autoplayHint = document.getElementById('autoplayHint');
-        function startMusic() {
-            // Try to play unmuted first (best UX). If blocked, try muted autoplay and
-            // instruct the user to unmute on first gesture. If muted autoplay also
-            // fails, show a simple hint the user can tap to start playback.
-            // Returns a Promise-like behavior via async/await.
-            (async function() {
-                try {
-                    audio.muted = false;
-                    await audio.play();
-                    autoplayHint.style.display = 'none';
-                    return;
-                } catch (e1) {
-                    try {
-                        // Try muted autoplay (allowed in most browsers)
-                        audio.muted = true;
-                        await audio.play();
-                        // Show a hint that lets the user unmute with a gesture
-                        autoplayHint.textContent = 'Tap to unmute ▶️';
-                        autoplayHint.style.display = 'block';
-
-                        // On first user gesture, unmute and resume playback (and hide hint)
-                        const unlock = () => {
-                            try { audio.muted = false; audio.play().catch(()=>{}); } catch(e){}
-                            autoplayHint.style.display = 'none';
-                            document.removeEventListener('click', unlock);
-                            document.removeEventListener('touchstart', unlock);
-                        };
-                        document.addEventListener('click', unlock, { once: true });
-                        document.addEventListener('touchstart', unlock, { once: true });
-                        return;
-                    } catch (e2) {
-                        // Both attempts failed: show generic start hint
-                        autoplayHint.textContent = 'Tap to start music ▶️';
-                        autoplayHint.style.display = 'block';
-                        return;
-                    }
-                }
-            })();
-        }
-
-        // Try to autoplay on load using the more robust flow above
-        window.addEventListener('load', () => {
-            startMusic();
-        });
-
-        // Make the hint clickable: either try to unmute or start playback directly
-        autoplayHint.addEventListener('click', () => {
-            // If audio is currently muted (muted-autoplay succeeded), unmute and play
-            if (audio.muted) {
-                audio.muted = false;
-                audio.play().catch(() => {});
-                autoplayHint.style.display = 'none';
-                return;
-            }
-            // otherwise, attempt to start music normally
-            startMusic();
-        });
+        // Background music removed — autoplay and unmute UI removed.
 
         // Floating hearts
         function createHeart() {
@@ -723,42 +656,23 @@
                 });
             });
 
-            function pauseBgMusicIfNeeded() {
-                try {
-                    if (!bgMusic.paused) {
-                        bgMusic.pause();
-                        // mark that bg was paused by player so we can resume later
-                        bgMusic.dataset.pausedByPlayer = '1';
-                    }
-                } catch(e) { /* ignore autoplay errors */ }
-            }
-            function resumeBgMusicIfNeeded() {
-                try {
-                    if (bgMusic.dataset.pausedByPlayer === '1') {
-                        bgMusic.play().catch(()=>{});
-                        delete bgMusic.dataset.pausedByPlayer;
-                    }
-                } catch(e) {}
-            }
+            // background music removed — no pause/resume interactions
 
             function playShared() {
                 if (!player.src) {
                     // nothing selected; try to select first
                     if (rows.length) selectRow(0);
                 }
-                pauseBgMusicIfNeeded();
                 player.play().then(() => {
                     masterPlay.textContent = '⏸';
                 }).catch(() => {
                     // user gesture required in some browsers; prompt
-                    autoplayHint.style.display = 'block';
+                    // autoplay blocked — nothing to do (no background music UI)
                 });
             }
             function pauseShared() {
                 player.pause();
                 masterPlay.textContent = '▶';
-                // resume background if it was paused by us
-                resumeBgMusicIfNeeded();
             }
 
             masterPlay.addEventListener('click', () => {
