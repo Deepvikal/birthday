@@ -117,7 +117,7 @@
             animation: float 4s infinite;
         }
 
-        /* Floating GIFs styles */
+        /* Floating GIFs styles (improved) */
         .floating-gifs {
             position: fixed;
             top: 0;
@@ -125,24 +125,31 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            overflow: hidden;
-            z-index: 1;
+            overflow: visible;
+            z-index: 9999; /* bring GIFs well above page content */
         }
         .floating-gifs .gif1,
         .floating-gifs .gif2,
         .floating-gifs .gif3 {
-            position: absolute;
+            position: fixed; /* fixed so GIFs stay relative to viewport */
             width: 80px;
-            animation: floatPath 15s linear infinite;
+            will-change: transform, bottom, opacity;
+            pointer-events: none; /* ensure GIFs don't block clicks */
+            mix-blend-mode: screen;
+            /* upward float (bottom) + subtle bob (transform) */
+            animation: floatGifUp 16s linear infinite, float 4s ease-in-out infinite;
         }
-        .floating-gifs .gif1 { left: 10%; animation-delay: 0s; }
-        .floating-gifs .gif2 { left: 50%; animation-delay: 5s; }
-        .floating-gifs .gif3 { left: 90%; animation-delay: 10s; }
+        /* start near bottom so they float up into view; stagger timings & durations */
+        .floating-gifs .gif1 { left: 8%; bottom: -8%; animation-delay: 0s; animation-duration: 14s, 4s; }
+        .floating-gifs .gif2 { left: 48%; bottom: -6%; animation-delay: 3s; animation-duration: 17s, 4s; }
+        .floating-gifs .gif3 { left: 85%; bottom: -10%; animation-delay: 6s; animation-duration: 19s, 4s; }
 
-        @keyframes floatPath {
-            0% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(-50vh); opacity: 0.8; }
-            100% { transform: translateY(0); opacity: 1; }
+        @keyframes floatGifUp {
+            0% { bottom: -18vh; transform: translateX(0) rotate(0deg) scale(1); opacity: 0.98; }
+            25% { bottom: 10vh; transform: translateX(18px) rotate(-4deg) scale(1.02); opacity: 1; }
+            50% { bottom: 50vh; transform: translateX(-12px) rotate(4deg) scale(1); opacity: 0.92; }
+            75% { bottom: 90vh; transform: translateX(10px) rotate(-2deg) scale(0.98); opacity: 0.88; }
+            100% { bottom: 130vh; transform: translateX(0) rotate(0deg) scale(1); opacity: 0.82; }
         }
 
         /* Floating hearts / sparkles */
@@ -151,12 +158,65 @@
             color: #ffb6c1;
             font-size: 20px;
             pointer-events: none;
-            animation: floatUp 4s linear infinite;
+            animation: floatHeartUp 4s linear infinite;
         }
-        @keyframes floatUp {
+        @keyframes floatHeartUp {
             0% { transform: translateY(0) scale(1); opacity: 1; }
             100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
+
+        /* Per-page backgrounds to make each section distinct */
+    #page1 { background: radial-gradient(circle at 20% 20%, rgba(255,240,230,0.14), transparent 12%), linear-gradient(135deg, #ff9ab3 0%, #ff6f91 40%, #8ad9ff 100%); }
+    #page2 { background: linear-gradient(120deg, rgba(255,245,240,0.06), rgba(255,230,240,0.02)), linear-gradient(120deg,#f6d365,#fda085); }
+    #page3 { background: linear-gradient(180deg, rgba(240,250,255,0.03), rgba(220,235,255,0.01)), linear-gradient(135deg,#c9ffbf,#ffafbd); }
+    #page4 { background: linear-gradient(180deg, rgba(10,10,20,0.15), rgba(20,10,30,0.06)), linear-gradient(135deg,#7ee8fa,#ffd36e); }
+    #page5 { background: linear-gradient(180deg, rgba(255,250,240,0.06), rgba(255,240,250,0.02)), linear-gradient(135deg,#fbc2eb,#a6c1ee); }
+    #page6 { background: linear-gradient(180deg, rgba(20,10,30,0.08), rgba(10,5,15,0.02)), linear-gradient(135deg,#ffd36e,#ff9ab3); }
+
+        /* Intro page hero styles */
+        #page1 h1 {
+            font-size: 62px;
+            line-height: 1.02;
+            margin: 0 0 6px;
+            background: linear-gradient(90deg,#fffaf0,#ffd6e0,#ffd36e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 8px 30px rgba(0,0,0,0.28);
+            transform-origin: center;
+            animation: heroPop 900ms cubic-bezier(.2,.9,.2,1) both;
+        }
+        @keyframes heroPop { from { transform: scale(0.9) translateY(6px); opacity:0 } to { transform: scale(1) translateY(0); opacity:1 } }
+
+        /* animated CTA */
+        #page1 button#nextBtn1 {
+            font-size: 18px;
+            padding: 14px 28px;
+            border-radius: 34px;
+            background: linear-gradient(90deg,#ffe28a,#ff9ab3);
+            box-shadow: 0 14px 40px rgba(255,110,150,0.16);
+            transform-origin: center;
+            animation: ctaGlow 2.2s ease-in-out infinite;
+        }
+        @keyframes ctaGlow {
+            0% { transform: translateY(0) scale(1); box-shadow: 0 10px 28px rgba(255,110,150,0.12); }
+            50% { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 48px rgba(255,110,150,0.18); }
+            100% { transform: translateY(0) scale(1); box-shadow: 0 10px 28px rgba(255,110,150,0.12); }
+        }
+
+        /* decorative sparkles for the intro */
+        #page1 .intro-decor { position: absolute; inset: 0; pointer-events: none; z-index: 50; }
+        #page1 .intro-decor span {
+            position: absolute; width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.9);
+            mix-blend-mode: screen; opacity: 0.9; transform: scale(0.9);
+            box-shadow: 0 6px 18px rgba(255,170,200,0.18);
+            animation: sparkle 3.2s linear infinite;
+        }
+        #page1 .intro-decor span.s1 { left: 12%; top: 26%; animation-delay: 0s; }
+        #page1 .intro-decor span.s2 { left: 22%; top: 54%; animation-delay: 0.4s; }
+        #page1 .intro-decor span.s3 { left: 72%; top: 18%; animation-delay: 0.9s; }
+        #page1 .intro-decor span.s4 { left: 82%; top: 50%; animation-delay: 1.6s; }
+        @keyframes sparkle { 0% { transform: translateY(0) scale(0.8); opacity:0 } 40% { opacity:1; transform: translateY(-6px) scale(1.1);} 100% { transform: translateY(-40px) scale(0.6); opacity:0 } }
 
         /* Song page styles */
         .song-container {
@@ -164,7 +224,14 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
-            max-width: 90%;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px) saturate(120%);
         }
         .song-card {
             background: rgba(255, 255, 255, 0.1);
@@ -185,6 +252,32 @@
             flex-direction: column;
             gap: 8px;
             align-items: stretch;
+        }
+        /* Shared player UI placed at left of the song list */
+        .shared-player {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            justify-content: flex-start;
+        }
+        .shared-player .play-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(180deg,#ff9ab3,#ff6f91);
+            border: 1px solid rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+        }
+        .shared-player .now-playing {
+            text-align: left;
+            font-size: 14px;
+            opacity: 0.95;
         }
         .song-row {
             display: flex;
@@ -211,10 +304,12 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.35);
             border: 1px solid rgba(255,255,255,0.06);
         }
-        .song-row .meta { flex: 1; text-align: left; }
+    .song-row .meta { flex: 1; text-align: left; }
         .song-row .meta .title { font-size: 16px; font-weight: 600; font-family: 'Roboto Slab', serif; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.45); -webkit-text-stroke: 0.4px rgba(0,0,0,0.18); }
         .song-row .meta .artist { font-size: 13px; opacity: 0.9; margin-top: 2px; font-family: 'Poppins', sans-serif; color: rgba(255,255,255,0.9); }
-        .mini-audio { width: 72px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+    /* hide per-row native controls when using shared player; keep for fallback if JS disabled */
+    .mini-audio { width: 72px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+    .no-js-hide .mini-audio { display: none; }
 
         /* Hidden message */
         #secretMessage {
@@ -232,6 +327,7 @@
             animation: fadeIn 1s ease;
             box-shadow: 0 10px 30px rgba(0,0,0,0.45);
             -webkit-text-stroke: 0.3px rgba(0,0,0,0.12);
+            z-index: 9001;
         }
 
         @keyframes fadeIn {
@@ -265,6 +361,7 @@
             .song-row .thumb { width: 40px; height: 40px; }
             .song-row .meta .title { font-size: 15px; }
             .mini-audio { width: 64px; height: 26px; }
+            .song-container { max-width: 95%; padding: 10px; border-radius: 12px; }
         }
     </style>
 </head>
@@ -272,41 +369,55 @@
 
     <!-- Floating GIFs -->
     <div class="floating-gifs">
-        <img src="images/1.gif" class="gif gif-float gif1" alt="Cake GIF">
-        <img src="images/2.gif" class="gif gif-float gif2" alt="Confetti GIF">
-        <img src="images/3.gif" class="gif gif-float gif3" alt="Balloons GIF">
+        <img src="images/1.gif" class="gif gif1" alt="Cake GIF">
+        <img src="images/2.gif" class="gif gif2" alt="Confetti GIF">
+        <img src="images/3.gif" class="gif gif3" alt="Balloons GIF">
     </div>
 
     <!-- Secret message -->
     <div id="secretMessage">💖 I Love You 💖</div>
 
     <!-- Pages -->
+    <!-- NEW: Intro / Get Ready page -->
     <div class="page active" id="page1">
+        <h1 style="font-size:48px; letter-spacing:1px;">Get ready for a surprise 🎉</h1>
+        <h2 style="font-size:20px; opacity:0.95; margin-top:8px;">Close your eyes, and count to three...</h2>
+        <p style="max-width:420px; margin-top:14px; opacity:0.95;">I made something special just for you — tap next when you're ready to begin!</p>
+        <button id="nextBtn1">Let’s go ✨</button>
+    </div>
+
+    <!-- reinstated: Kuchupuchu / personal greeting as page2 -->
+    <div class="page" id="page2">
         <h1>🎂 Happy Birthday Vaishnavi 💖</h1>
         <h2>You’re my kuchupuchu ☀️</h2>
         <img src="images/photo4.jpg" alt="Vaishnavi">
-        <button id="nextBtn1">Next ➡️</button>
-    </div>
-
-    <div class="page" id="page2">
-        <h1>💌 Note by Heart 💌</h1>
-        <p style="max-width:320px;">Babu tere bina sab boring lagta hai , you are the most wonderful person in my life.</p>
-        <img src="images/notePhoto.gif" alt="Note Photo">
         <button id="nextBtn2">Next ➡️</button>
     </div>
 
     <div class="page" id="page3">
-        <h1>💌 Kissi For you Moti 💌</h1>
-        <p style="max-width:320px;">😘</p>
-        <img src="images/yourGIF.gif" alt="GIF for you">
+        <h1>💌 Note by Heart 💌</h1>
+        <p style="max-width:320px;">Babu tere bina sab boring lagta hai , you are the most wonderful person in my life.</p>
+        <img src="images/notePhoto.gif" alt="Note Photo">
         <button id="nextBtn3">Next ➡️</button>
     </div>
 
     <div class="page" id="page4">
+        <h1>💌 Kissi For you Moti 💌</h1>
+        <p style="max-width:320px;">😘</p>
+        <img src="images/yourGIF.gif" alt="GIF for you">
+        <button id="nextBtn4">Next ➡️</button>
+    </div>
+
+    <div class="page" id="page5">
         <h1> Songs I Dedicate to You 🎵</h1>
         <p>Here’s a list of 5 songs that remind me of us.</p>
-        <div class="song-container">
-            <div class="song-list">
+        <div class="song-container no-js-hide">
+            <!-- shared player sits above the list -->
+            <div class="shared-player" id="sharedPlayer" aria-hidden="false">
+                <div class="play-btn" id="masterPlay" title="Play/Pause">▶</div>
+                <div class="now-playing" id="nowPlaying">Select a song to play</div>
+            </div>
+            <div class="song-list" id="songList">
                 <div class="song-row">
                     <div class="rank">1</div>
                     <img class="thumb" src="images/thumb1.jpg" alt="thumb1">
@@ -355,10 +466,10 @@
             </div>
         </div>
         <p>These songs are all for you, Vaishnavi. ❤️</p>
-        <button id="nextBtn4">Next ➡️</button>
+        <button id="nextBtn5">Next ➡️</button>
     </div>
 
-    <div class="page" id="page5">
+    <div class="page" id="page6">
         <h1>🎉 Surprise! 🎉</h1>
         <img src="images/photo3.gif" alt="Surprise">
         <h2>Happy Birthday, my love 💖</h2>
@@ -372,12 +483,12 @@
     </audio>
 
     <!-- Autoplay hint (shown only if autoplay is blocked) -->
-    <div id="autoplayHint" style="position:fixed; right:16px; bottom:18px; background:rgba(0,0,0,0.4); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; display:none; z-index:999;">Tap to start music ▶️</div>
+    <div id="autoplayHint" style="position:fixed; right:16px; bottom:18px; background:rgba(0,0,0,0.4); color:#fff; padding:8px 12px; border-radius:20px; cursor:pointer; display:none; z-index:9000;">Tap to start music ▶️</div>
 
     <script>
     // Page switching
-        let current = 1;
-        const total = 5;
+    let current = 1;
+    const total = 6;
         function showPage(n) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('page' + n).classList.add('active');
@@ -387,10 +498,13 @@
             showPage(current);
         }
 
-        document.getElementById('nextBtn1').onclick = function() { startMusic(); nextPage(); };
-        document.getElementById('nextBtn2').onclick = nextPage;
-        document.getElementById('nextBtn3').onclick = nextPage;
-        document.getElementById('nextBtn4').onclick = nextPage;
+    document.getElementById('nextBtn1').onclick = function() { startMusic(); nextPage(); };
+    document.getElementById('nextBtn2').onclick = nextPage;
+    document.getElementById('nextBtn3').onclick = nextPage;
+    document.getElementById('nextBtn4').onclick = nextPage;
+    // newly added navigation for the songs -> surprise transition
+    const maybeNext5 = document.getElementById('nextBtn5');
+    if (maybeNext5) maybeNext5.onclick = nextPage;
         // Restart button on last page -> go to first page
         const restartBtn = document.getElementById('restartBtn');
         if (restartBtn) {
@@ -405,21 +519,60 @@
         const audio = document.getElementById('bg-music');
         const autoplayHint = document.getElementById('autoplayHint');
         function startMusic() {
-            return audio.play().then(() => {
-                autoplayHint.style.display = 'none';
-            }).catch(() => {
-                // Autoplay blocked: show hint to let the user start playback
-                autoplayHint.style.display = 'block';
-            });
+            // Try to play unmuted first (best UX). If blocked, try muted autoplay and
+            // instruct the user to unmute on first gesture. If muted autoplay also
+            // fails, show a simple hint the user can tap to start playback.
+            // Returns a Promise-like behavior via async/await.
+            (async function() {
+                try {
+                    audio.muted = false;
+                    await audio.play();
+                    autoplayHint.style.display = 'none';
+                    return;
+                } catch (e1) {
+                    try {
+                        // Try muted autoplay (allowed in most browsers)
+                        audio.muted = true;
+                        await audio.play();
+                        // Show a hint that lets the user unmute with a gesture
+                        autoplayHint.textContent = 'Tap to unmute ▶️';
+                        autoplayHint.style.display = 'block';
+
+                        // On first user gesture, unmute and resume playback (and hide hint)
+                        const unlock = () => {
+                            try { audio.muted = false; audio.play().catch(()=>{}); } catch(e){}
+                            autoplayHint.style.display = 'none';
+                            document.removeEventListener('click', unlock);
+                            document.removeEventListener('touchstart', unlock);
+                        };
+                        document.addEventListener('click', unlock, { once: true });
+                        document.addEventListener('touchstart', unlock, { once: true });
+                        return;
+                    } catch (e2) {
+                        // Both attempts failed: show generic start hint
+                        autoplayHint.textContent = 'Tap to start music ▶️';
+                        autoplayHint.style.display = 'block';
+                        return;
+                    }
+                }
+            })();
         }
 
-        // Try to autoplay on load
+        // Try to autoplay on load using the more robust flow above
         window.addEventListener('load', () => {
             startMusic();
         });
 
-        // Make the hint clickable to start music
+        // Make the hint clickable: either try to unmute or start playback directly
         autoplayHint.addEventListener('click', () => {
+            // If audio is currently muted (muted-autoplay succeeded), unmute and play
+            if (audio.muted) {
+                audio.muted = false;
+                audio.play().catch(() => {});
+                autoplayHint.style.display = 'none';
+                return;
+            }
+            // otherwise, attempt to start music normally
             startMusic();
         });
 
@@ -447,6 +600,187 @@
             }
             setTimeout(() => tapCount = 0, 1500);
         });
+
+        // Floating GIFs — random-direction motion using requestAnimationFrame
+        (function() {
+            const gifs = Array.from(document.querySelectorAll('.floating-gifs img'));
+            if (!gifs.length) return;
+            const state = [];
+            const vw = () => Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = () => Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+            // initialize each gif with random position and velocity
+            function init() {
+                const W = vw();
+                const H = vh();
+                gifs.forEach((el, i) => {
+                    // reduce CSS animation interference: keep bob only
+                    el.style.animation = 'float 4s ease-in-out infinite';
+                    el.style.willChange = 'transform, left, top';
+                    const w = el.width || 80;
+                    // start slightly off-screen below
+                    const left = Math.random() * (W - w);
+                    const top = H + (50 + Math.random() * 200);
+                    el.style.left = left + 'px';
+                    el.style.top = top + 'px';
+                    el.style.position = 'fixed';
+
+                    // velocities in px per ms
+                    const speed = 0.04 + Math.random() * 0.12; // base speed
+                    const angle = - (0.5 + Math.random() * 1.0) * Math.PI/2 + (Math.random()-0.5); // generally upwards
+                    const vx = Math.cos(angle) * speed;
+                    const vy = Math.sin(angle) * speed;
+                    state[i] = { el, x: left, y: top, vx, vy, wobble: Math.random()*0.002 + 0.0005, angle: (Math.random()-0.5)*6 };
+                });
+            }
+
+            let last = performance.now();
+            function tick(now) {
+                const dt = Math.min(40, now - last); // cap delta for stability
+                last = now;
+                const W = vw();
+                const H = vh();
+                state.forEach(s => {
+                    if (!s) return;
+                    // small random jitter to change direction slowly
+                    s.vx += (Math.random() - 0.5) * s.wobble * dt;
+                    s.vy += (Math.random() - 0.5) * s.wobble * dt;
+                    // limit speeds
+                    const vmax = 0.25;
+                    s.vx = Math.max(-vmax, Math.min(vmax, s.vx));
+                    s.vy = Math.max(-vmax, Math.min(vmax, s.vy));
+                    s.x += s.vx * dt;
+                    s.y += s.vy * dt;
+
+                    // gentle horizontal wrap-around
+                    if (s.x < -100) s.x = W + 100;
+                    if (s.x > W + 100) s.x = -100;
+
+                    // if completely off top, reset to bottom
+                    if (s.y < -200) {
+                        s.y = H + (40 + Math.random()*160);
+                        s.x = Math.random() * (W - (s.el.width||80));
+                        // new upward velocity
+                        const speed = 0.05 + Math.random() * 0.12;
+                        const angle = - (0.5 + Math.random() * 1.0) * Math.PI/2 + (Math.random()-0.5);
+                        s.vx = Math.cos(angle) * speed;
+                        s.vy = Math.sin(angle) * speed;
+                    }
+
+                    // apply styles
+                    s.el.style.left = (s.x) + 'px';
+                    s.el.style.top = (s.y) + 'px';
+                    // subtle rotation based on vx
+                    const rot = s.vx * 120;
+                    s.el.style.transform = `rotate(${rot}deg)`;
+                });
+                requestAnimationFrame(tick);
+            }
+
+            window.addEventListener('resize', init);
+            init();
+            requestAnimationFrame(tick);
+        })();
+
+        // Shared player: single audio element to play selected song rows
+        (function() {
+            const songListEl = document.getElementById('songList');
+            const rows = Array.from(document.querySelectorAll('.song-row'));
+            const masterPlay = document.getElementById('masterPlay');
+            const nowPlaying = document.getElementById('nowPlaying');
+            const bgMusic = document.getElementById('bg-music');
+
+            // if JS is running, hide per-row native controls (we'll keep them for noscript fallback)
+            document.documentElement.classList.remove('no-js-hide');
+            // create a single audio element used by the shared player
+            const player = document.createElement('audio');
+            player.id = 'sharedAudio';
+            player.preload = 'auto';
+            player.style.display = 'none';
+            document.body.appendChild(player);
+
+            let currentIndex = -1;
+
+            function selectRow(index) {
+                if (currentIndex === index) return;
+                rows.forEach((r, i) => r.classList.toggle('active-row', i === index));
+                const selected = rows[index];
+                const src = selected.querySelector('.mini-audio')?.getAttribute('src') || '';
+                const title = selected.querySelector('.meta .title')?.textContent || 'Unknown';
+                const artist = selected.querySelector('.meta .artist')?.textContent || '';
+                nowPlaying.textContent = title + (artist ? (' — ' + artist) : '');
+                player.src = src;
+                player.currentTime = 0;
+                currentIndex = index;
+            }
+
+            // clicking a row selects it and plays
+            rows.forEach((r, i) => {
+                r.style.cursor = 'pointer';
+                r.addEventListener('click', (ev) => {
+                    selectRow(i);
+                    playShared();
+                });
+            });
+
+            function pauseBgMusicIfNeeded() {
+                try {
+                    if (!bgMusic.paused) {
+                        bgMusic.pause();
+                        // mark that bg was paused by player so we can resume later
+                        bgMusic.dataset.pausedByPlayer = '1';
+                    }
+                } catch(e) { /* ignore autoplay errors */ }
+            }
+            function resumeBgMusicIfNeeded() {
+                try {
+                    if (bgMusic.dataset.pausedByPlayer === '1') {
+                        bgMusic.play().catch(()=>{});
+                        delete bgMusic.dataset.pausedByPlayer;
+                    }
+                } catch(e) {}
+            }
+
+            function playShared() {
+                if (!player.src) {
+                    // nothing selected; try to select first
+                    if (rows.length) selectRow(0);
+                }
+                pauseBgMusicIfNeeded();
+                player.play().then(() => {
+                    masterPlay.textContent = '⏸';
+                }).catch(() => {
+                    // user gesture required in some browsers; prompt
+                    autoplayHint.style.display = 'block';
+                });
+            }
+            function pauseShared() {
+                player.pause();
+                masterPlay.textContent = '▶';
+                // resume background if it was paused by us
+                resumeBgMusicIfNeeded();
+            }
+
+            masterPlay.addEventListener('click', () => {
+                if (player.paused) playShared(); else pauseShared();
+            });
+
+            // when song ends, reset button and resume bg music
+            player.addEventListener('ended', () => {
+                masterPlay.textContent = '▶';
+                resumeBgMusicIfNeeded();
+            });
+
+            // if user manually pauses the shared player, resume bg
+            player.addEventListener('pause', () => {
+                if (player.currentTime > 0 && !player.ended) {
+                    resumeBgMusicIfNeeded();
+                }
+            });
+
+            // expose selectRow for potential future use
+            window.selectSongRow = selectRow;
+        })();
     </script>
 </body>
 </html>
