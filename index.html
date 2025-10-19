@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,9 +173,8 @@
     #page5 { background: linear-gradient(180deg, rgba(255,250,240,0.06), rgba(255,240,250,0.02)), linear-gradient(135deg,#fbc2eb,#a6c1ee); }
     #page6 { background: linear-gradient(180deg, rgba(20,10,30,0.08), rgba(10,5,15,0.02)), linear-gradient(135deg,#ffd36e,#ff9ab3); }
     #page2 img { max-width: 76.5%; }
-          
 
-        
+        /* Ensure Note page text is highly readable on pastel background */
         #page3 h1, #page3 p {
             color: #07282b; /* deep teal for contrast */
             -webkit-text-stroke: 0.6px rgba(255,255,255,0.85);
@@ -226,6 +224,245 @@
         #page1 .intro-decor span.s2 { left: 22%; top: 54%; animation-delay: 0.4s; }
         #page1 .intro-decor span.s3 { left: 72%; top: 18%; animation-delay: 0.9s; }
         #page1 .intro-decor span.s4 { left: 82%; top: 50%; animation-delay: 1.6s; }
+        @keyframes sparkle { 0% { transform: translateY(0) scale(0.8); opacity:0 } 40% { opacity:1; transform: translateY(-6px) scale(1.1);} 100% { transform: translateY(-40px) scale(0.6); opacity:0 } }
+
+        /* Song page styles */
+        .song-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 18px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(8px) saturate(120%);
+        }
+        .song-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 10px;
+            width: 45%;
+            max-width: 200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        audio {
+            width: 100%;
+            margin-top: 5px;
+        }
+        /* New compact list styles */
+        .song-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: stretch;
+        }
+        /* Shared player UI placed at left of the song list */
+        .shared-player {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+            justify-content: flex-start;
+        }
+        .shared-player .play-btn {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(180deg,#ff9ab3,#ff6f91);
+            border: 1px solid rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.28);
+        }
+        .shared-player .now-playing {
+            text-align: left;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+        .song-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 10px;
+        }
+        .song-row.active-row { background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); }
+        .song-row .rank {
+            width: 28px;
+            text-align: center;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            opacity: 0.95;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+        }
+        .song-row .thumb {
+            width: 44px;
+            height: 44px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+    .song-row .meta { flex: 1; text-align: left; }
+        .song-row .meta .title { font-size: 16px; font-weight: 600; font-family: 'Roboto Slab', serif; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.45); -webkit-text-stroke: 0.4px rgba(0,0,0,0.18); }
+        .song-row .meta .artist { font-size: 13px; opacity: 0.9; margin-top: 2px; font-family: 'Poppins', sans-serif; color: rgba(255,255,255,0.9); }
+    /* hide per-row native controls when using shared player; keep for fallback if JS disabled */
+    .mini-audio { width: 72px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
+    .no-js-hide .mini-audio { display: none; }
+
+        /* Hidden message */
+        #secretMessage {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.02));
+            padding: 12px 20px;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 18px;
+            backdrop-filter: blur(8px);
+            display: none;
+            animation: fadeIn 1s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+            -webkit-text-stroke: 0.3px rgba(0,0,0,0.12);
+            z-index: 9001;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 📱 Mobile-friendly adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 22px; }
+            h2 { font-size: 18px; }
+            p { font-size: 15px; }
+            img { max-width: 95%; }
+            button {
+                font-size: 14px;
+                padding: 10px 18px;
+            }
+            .song-card {
+                width: 90%;
+                max-width: 320px;
+                padding: 8px;
+                border-radius: 12px;
+            }
+            .song-card h3 { font-size: 16px; margin: 6px 0; }
+            .song-card p { font-size: 13px; margin: 4px 0; }
+            .song-card audio { height: 36px; }
+            /* Adjust list rows on mobile */
+            .song-list { gap: 6px; }
+            .song-row { padding: 6px 8px; }
+            .song-row .rank { width: 22px; font-size: 14px; }
+            .song-row .thumb { width: 40px; height: 40px; }
+            .song-row .meta .title { font-size: 15px; }
+            .mini-audio { width: 64px; height: 26px; }
+            .song-container { max-width: 95%; padding: 10px; border-radius: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating GIFs -->
+    <div class="floating-gifs">
+        <img src="images/1.gif" class="gif gif1" alt="Cake GIF">
+        <img src="images/2.gif" class="gif gif2" alt="Confetti GIF">
+        <img src="images/3.gif" class="gif gif3" alt="Balloons GIF">
+    </div>
+
+    <!-- Secret message -->
+    <div id="secretMessage">💖 I Love You 💖</div>
+
+    <!-- Pages -->
+    <!-- NEW: Intro / Get Ready page -->
+    <div class="page active" id="page1">
+        <h1 style="font-size:48px; letter-spacing:1px;">Get ready for a surprise 🎉</h1>
+        <h2 style="font-size:20px; opacity:0.95; margin-top:8px;">Close your eyes, and count to three...</h2>
+        <p style="max-width:420px; margin-top:14px; opacity:0.95;">I made something special just for you — tap next when you're ready to begin!</p>
+        <button id="nextBtn1">Let’s go ✨</button>
+    </div>
+   
+    <!-- reinstated: Kuchupuchu / personal greeting as page2 -->
+    <div class="page" id="page2">
+        <h1>🎂 Happy Birthday Vaishnavi 💖</h1>
+        <h2>You’re my kuchupuchu ☀️</h2>
+        <img src="images/photo4.jpg" alt="Vaishnavi">
+        <button id="nextBtn2">Next ➡️</button>
+    </div>
+
+    <div class="page" id="page3">
+        <h1>💌 Note by Heart 💌</h1>
+        <p style="max-width:320px;">Babu tere bina sab boring lagta hai , you are the most wonderful person in my life.</p>
+        <img src="images/notephoto.gif" alt="Note Photo">
+        <button id="nextBtn3">Next ➡️</button>
+    </div>
+
+    <div class="page" id="page4">
+        <h1>💌 Kissi For you Moti 💌</h1>
+        <p style="max-width:320px;">😘</p>
+        <img src="images/yourGIF.gif" alt="GIF for you">
+        <button id="nextBtn4">Next ➡️</button>
+    </div>
+
+    <div class="page" id="page5">
+        <h1> Songs I Dedicate to You 🎵</h1>
+        <p>Here’s a list of 5 songs that remind me of us.</p>
+        <div class="song-container no-js-hide">
+            <!-- shared player sits above the list -->
+            <div class="shared-player" id="sharedPlayer" aria-hidden="false">
+                <div class="play-btn" id="masterPlay" title="Play/Pause">▶</div>
+                <div class="now-playing" id="nowPlaying">Select a song to play</div>
+            </div>
+            <div class="song-list" id="songList">
+                <div class="song-row">
+                    <div class="rank">1</div>
+                    <img class="thumb" src="images/thumb1.jpg" alt="thumb1">
+                    <div class="meta">
+                        <div class="title">Iktara</div>
+                        <div class="artist">Amit Trivedi, K... </div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song1.mp3"></audio>
+                </div>
+                <div class="song-row active-row">
+                    <div class="rank">2</div>
+                    <img class="thumb" src="images/thumb2.jpg" alt="thumb2">
+                    <div class="meta">
+                        <div class="title">Mere Sohneya</div>
+                        <div class="artist">Sachet Tandon, P...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song2.mp3"></audio>
+                </div>
+                <div class="song-row">
+                    <div class="rank">3</div>
+                    <img class="thumb" src="images/thumb3.jpg" alt="thumb3">
+                    <div class="meta">
+                        <div class="title">Dhadak - Title ...</div>
+                        <div class="artist">Ajay Gogavale, S...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song3.mp3"></audio>
+                </div>
+                <div class="song-row">
+                    <div class="rank">4</div>
+                    <img class="thumb" src="images/thumb4.jpg" alt="thumb4">
+                    <div class="meta">
+                        <div class="title">Dil Dardeh</div>
+                        <div class="artist">Sukha, The Proph...</div>
+                    </div>
+                    <audio class="mini-audio" controls src="music/song4.mp3"></audio>
+                </div>
+                <div class=      #page1 .intro-decor span.s4 { left: 82%; top: 50%; animation-delay: 1.6s; }
         @keyframes sparkle { 0% { transform: translateY(0) scale(0.8); opacity:0 } 40% { opacity:1; transform: translateY(-6px) scale(1.1);} 100% { transform: translateY(-40px) scale(0.6); opacity:0 } }
 
         /* Song page styles */
