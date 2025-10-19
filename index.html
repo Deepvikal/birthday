@@ -8,13 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Roboto+Slab:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --text-stroke: 0.6px rgba(0,0,0,0.24); }
-        /* apply a default stroke to main text elements for a bolder look */
+        
         h1, h2, button, p, a, .song-row .meta .title, .song-row .meta .artist, .song-row .rank, #secretMessage { -webkit-text-stroke: var(--text-stroke); }
 
         body {
             margin: 0;
             font-family: Poppins, sans-serif;
-            /* richer layered background */
+           
             background: radial-gradient(circle at 10% 10%, rgba(255,250,240,0.18), transparent 12%),
                         linear-gradient(135deg, #ff6fb5 0%, #ffd36e 40%, #7ee8fa 100%);
             color: #fff;
@@ -22,7 +22,7 @@
             overflow: hidden;
             position: relative;
         }
-        /* Typography enhancements */
+      
         h1 {
             font-family: 'Playfair Display', serif;
             font-size: 42px;
@@ -45,7 +45,7 @@
             color: rgba(255,255,255,0.95);
             text-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        /* Button style tweak */
+       
         button {
             font-family: 'Poppins', sans-serif;
             box-shadow: 0 8px 22px rgba(0,0,0,0.22);
@@ -53,7 +53,7 @@
             background: linear-gradient(90deg,#ff7aa2,#ffb86b);
             border: 1px solid rgba(255,255,255,0.12);
         }
-        /* Song title styling */
+        
         .song-row .meta .title {
             font-family: 'Roboto Slab', serif;
             color: #fff;
@@ -61,7 +61,7 @@
             -webkit-text-stroke: var(--text-stroke);
         }
         .song-row .meta .artist { font-family: 'Poppins', sans-serif; -webkit-text-stroke: var(--text-stroke); }
-        /* Secret message styling */
+      
         #secretMessage {
             font-family: 'Playfair Display', serif;
             font-size: 20px;
@@ -106,7 +106,7 @@
         button:hover {
             transform: scale(1.05);
         }
-        /* play button removed: autoplay is used instead */
+       
 
         @keyframes float {
             0% { transform: translateY(0px); }
@@ -117,7 +117,7 @@
             animation: float 4s infinite;
         }
 
-        /* Floating GIFs styles (improved) */
+       
         .floating-gifs {
             position: fixed;
             top: 0;
@@ -126,20 +126,20 @@
             height: 100%;
             pointer-events: none;
             overflow: visible;
-            z-index: 9999; /* bring GIFs well above page content */
+            z-index: 9999; 
         }
         .floating-gifs .gif1,
         .floating-gifs .gif2,
         .floating-gifs .gif3 {
-            position: fixed; /* fixed so GIFs stay relative to viewport */
+            position: fixed; 
             width: 80px;
             will-change: transform, bottom, opacity;
-            pointer-events: none; /* ensure GIFs don't block clicks */
+            pointer-events: none; 
             mix-blend-mode: screen;
-            /* upward float (bottom) + subtle bob (transform) */
+           
             animation: floatGifUp 16s linear infinite, float 4s ease-in-out infinite;
         }
-        /* start near bottom so they float up into view; stagger timings & durations */
+       
         .floating-gifs .gif1 { left: 8%; bottom: -8%; animation-delay: 0s; animation-duration: 14s, 4s; }
         .floating-gifs .gif2 { left: 48%; bottom: -6%; animation-delay: 3s; animation-duration: 17s, 4s; }
         .floating-gifs .gif3 { left: 85%; bottom: -10%; animation-delay: 6s; animation-duration: 19s, 4s; }
@@ -152,7 +152,7 @@
             100% { bottom: 130vh; transform: translateX(0) rotate(0deg) scale(1); opacity: 0.82; }
         }
 
-        /* Floating hearts / sparkles */
+       
         .heart {
             position: fixed;
             color: #ffb6c1;
@@ -165,7 +165,7 @@
             100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
 
-        /* Per-page backgrounds to make each section distinct */
+        
     #page1 { background: radial-gradient(circle at 20% 20%, rgba(255,240,230,0.14), transparent 12%), linear-gradient(135deg, #ff9ab3 0%, #ff6f91 40%, #8ad9ff 100%); }
     #page2 { background: linear-gradient(120deg, rgba(255,245,240,0.06), rgba(255,230,240,0.02)), linear-gradient(120deg,#f6d365,#fda085); }
     #page3 { background: linear-gradient(180deg, rgba(240,250,255,0.03), rgba(220,235,255,0.01)), linear-gradient(135deg,#c9ffbf,#ffafbd); }
@@ -199,7 +199,7 @@
         }
         @keyframes heroPop { from { transform: scale(0.9) translateY(6px); opacity:0 } to { transform: scale(1) translateY(0); opacity:1 } }
 
-        /* animated CTA */
+     
         #page1 button#nextBtn1 {
             font-size: 18px;
             padding: 14px 28px;
@@ -215,7 +215,7 @@
             100% { transform: translateY(0) scale(1); box-shadow: 0 10px 28px rgba(255,110,150,0.12); }
         }
 
-        /* decorative sparkles for the intro */
+        
         #page1 .intro-decor { position: absolute; inset: 0; pointer-events: none; z-index: 50; }
         #page1 .intro-decor span {
             position: absolute; width: 12px; height: 12px; border-radius: 50%; background: rgba(255,255,255,0.9);
@@ -229,7 +229,7 @@
         #page1 .intro-decor span.s4 { left: 82%; top: 50%; animation-delay: 1.6s; }
         @keyframes sparkle { 0% { transform: translateY(0) scale(0.8); opacity:0 } 40% { opacity:1; transform: translateY(-6px) scale(1.1);} 100% { transform: translateY(-40px) scale(0.6); opacity:0 } }
 
-        /* Song page styles */
+        
         .song-container {
             display: flex;
             flex-wrap: wrap;
@@ -256,7 +256,7 @@
             width: 100%;
             margin-top: 5px;
         }
-        /* New compact list styles */
+       
         .song-list {
             width: 100%;
             display: flex;
@@ -264,7 +264,7 @@
             gap: 8px;
             align-items: stretch;
         }
-        /* Shared player UI placed at left of the song list */
+        
         .shared-player {
             display: flex;
             align-items: center;
@@ -318,11 +318,11 @@
     .song-row .meta { flex: 1; text-align: left; }
         .song-row .meta .title { font-size: 16px; font-weight: 600; font-family: 'Roboto Slab', serif; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.45); -webkit-text-stroke: 0.4px rgba(0,0,0,0.18); }
         .song-row .meta .artist { font-size: 13px; opacity: 0.9; margin-top: 2px; font-family: 'Poppins', sans-serif; color: rgba(255,255,255,0.9); }
-    /* hide per-row native controls when using shared player; keep for fallback if JS disabled */
+    
     .mini-audio { width: 72px; height: 28px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35)); }
     .no-js-hide .mini-audio { display: none; }
 
-        /* Hidden message */
+       
         #secretMessage {
             position: fixed;
             bottom: 80px;
@@ -346,7 +346,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 📱 Mobile-friendly adjustments */
+        
         @media (max-width: 600px) {
             h1 { font-size: 22px; }
             h2 { font-size: 18px; }
@@ -378,18 +378,17 @@
 </head>
 <body>
 
-    <!-- Floating GIFs -->
+ 
     <div class="floating-gifs">
         <img src="images/1.gif" class="gif gif1" alt="Cake GIF">
         <img src="images/2.gif" class="gif gif2" alt="Confetti GIF">
         <img src="images/3.gif" class="gif gif3" alt="Balloons GIF">
     </div>
 
-    <!-- Secret message -->
+    
     <div id="secretMessage">💖 I Love You 💖</div>
 
-    <!-- Pages -->
-    <!-- NEW: Intro / Get Ready page -->
+    
     <div class="page active" id="page1">
         <h1 style="font-size:48px; letter-spacing:1px;">Get ready for a surprise 🎉</h1>
         <h2 style="font-size:20px; opacity:0.95; margin-top:8px;">Close your eyes, and count to three...</h2>
@@ -397,7 +396,7 @@
         <button id="nextBtn1">Let’s go ✨</button>
     </div>
    
-    <!-- reinstated: Kuchupuchu / personal greeting as page2 -->
+   
     <div class="page" id="page2">
         <h1>🎂 Happy Birthday Vaishnavi 💖</h1>
         <h2>You’re my kuchupuchu ☀️</h2>
@@ -488,10 +487,10 @@
         <button id="restartBtn">Start Over ⤴️</button>
     </div>
 
-    <!-- background music removed per request -->
+
 
     <script>
-    // Page switching
+   
     let current = 1;
     const total = 6;
         function showPage(n) {
@@ -507,10 +506,10 @@
     document.getElementById('nextBtn2').onclick = nextPage;
     document.getElementById('nextBtn3').onclick = nextPage;
     document.getElementById('nextBtn4').onclick = nextPage;
-    // newly added navigation for the songs -> surprise transition
+  
     const maybeNext5 = document.getElementById('nextBtn5');
     if (maybeNext5) maybeNext5.onclick = nextPage;
-        // Restart button on last page -> go to first page
+        
         const restartBtn = document.getElementById('restartBtn');
         if (restartBtn) {
             restartBtn.addEventListener('click', () => {
@@ -518,9 +517,9 @@
                 showPage(1);
             });
         }
-        // Background music removed — autoplay and unmute UI removed.
+       
 
-        // Floating hearts
+       
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart';
@@ -532,7 +531,7 @@
         }
         setInterval(createHeart, 800);
 
-        // Hidden message trigger (triple tap anywhere on document)
+      
         let tapCount = 0;
         document.addEventListener('click', () => {
             tapCount++;
@@ -545,7 +544,7 @@
             setTimeout(() => tapCount = 0, 1500);
         });
 
-        // Floating GIFs — random-direction motion using requestAnimationFrame
+        
         (function() {
             const gifs = Array.from(document.querySelectorAll('.floating-gifs img'));
             if (!gifs.length) return;
@@ -553,12 +552,12 @@
             const vw = () => Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
             const vh = () => Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
-            // initialize each gif with random position and velocity
+            
             function init() {
                 const W = vw();
                 const H = vh();
                 gifs.forEach((el, i) => {
-                    // reduce CSS animation interference: keep bob only
+                
                     el.style.animation = 'float 4s ease-in-out infinite';
                     el.style.willChange = 'transform, left, top';
                     const w = el.width || 80;
@@ -569,9 +568,9 @@
                     el.style.top = top + 'px';
                     el.style.position = 'fixed';
 
-                    // velocities in px per ms
-                    const speed = 0.04 + Math.random() * 0.12; // base speed
-                    const angle = - (0.5 + Math.random() * 1.0) * Math.PI/2 + (Math.random()-0.5); // generally upwards
+                    
+                    const speed = 0.04 + Math.random() * 0.12;
+                    const angle = - (0.5 + Math.random() * 1.0) * Math.PI/2 + (Math.random()-0.5); 
                     const vx = Math.cos(angle) * speed;
                     const vy = Math.sin(angle) * speed;
                     state[i] = { el, x: left, y: top, vx, vy, wobble: Math.random()*0.002 + 0.0005, angle: (Math.random()-0.5)*6 };
@@ -580,41 +579,41 @@
 
             let last = performance.now();
             function tick(now) {
-                const dt = Math.min(40, now - last); // cap delta for stability
+                const dt = Math.min(40, now - last); 
                 last = now;
                 const W = vw();
                 const H = vh();
                 state.forEach(s => {
                     if (!s) return;
-                    // small random jitter to change direction slowly
+                    
                     s.vx += (Math.random() - 0.5) * s.wobble * dt;
                     s.vy += (Math.random() - 0.5) * s.wobble * dt;
-                    // limit speeds
+                    
                     const vmax = 0.25;
                     s.vx = Math.max(-vmax, Math.min(vmax, s.vx));
                     s.vy = Math.max(-vmax, Math.min(vmax, s.vy));
                     s.x += s.vx * dt;
                     s.y += s.vy * dt;
 
-                    // gentle horizontal wrap-around
+                   
                     if (s.x < -100) s.x = W + 100;
                     if (s.x > W + 100) s.x = -100;
 
-                    // if completely off top, reset to bottom
+                    
                     if (s.y < -200) {
                         s.y = H + (40 + Math.random()*160);
                         s.x = Math.random() * (W - (s.el.width||80));
-                        // new upward velocity
+                        
                         const speed = 0.05 + Math.random() * 0.12;
                         const angle = - (0.5 + Math.random() * 1.0) * Math.PI/2 + (Math.random()-0.5);
                         s.vx = Math.cos(angle) * speed;
                         s.vy = Math.sin(angle) * speed;
                     }
 
-                    // apply styles
+                 
                     s.el.style.left = (s.x) + 'px';
                     s.el.style.top = (s.y) + 'px';
-                    // subtle rotation based on vx
+                    
                     const rot = s.vx * 120;
                     s.el.style.transform = `rotate(${rot}deg)`;
                 });
@@ -626,7 +625,7 @@
             requestAnimationFrame(tick);
         })();
 
-        // Shared player: single audio element to play selected song rows
+        
         (function() {
             const songListEl = document.getElementById('songList');
             const rows = Array.from(document.querySelectorAll('.song-row'));
@@ -634,9 +633,9 @@
             const nowPlaying = document.getElementById('nowPlaying');
             const bgMusic = document.getElementById('bg-music');
 
-            // if JS is running, hide per-row native controls (we'll keep them for noscript fallback)
+            
             document.documentElement.classList.remove('no-js-hide');
-            // create a single audio element used by the shared player
+          
             const player = document.createElement('audio');
             player.id = 'sharedAudio';
             player.preload = 'auto';
@@ -658,27 +657,24 @@
                 currentIndex = index;
             }
 
-            // clicking a row selects it and plays
+         
             rows.forEach((r, i) => {
                 r.style.cursor = 'pointer';
                 r.addEventListener('click', (ev) => {
                     selectRow(i);
                     playShared();
                 });
-            });
-
-            // background music removed — no pause/resume interactions
+            })
 
             function playShared() {
                 if (!player.src) {
-                    // nothing selected; try to select first
+                
                     if (rows.length) selectRow(0);
                 }
                 player.play().then(() => {
                     masterPlay.textContent = '⏸';
                 }).catch(() => {
-                    // user gesture required in some browsers; prompt
-                    // autoplay blocked — nothing to do (no background music UI)
+                    
                 });
             }
             function pauseShared() {
@@ -690,20 +686,20 @@
                 if (player.paused) playShared(); else pauseShared();
             });
 
-            // when song ends, reset button and resume bg music
+            
             player.addEventListener('ended', () => {
                 masterPlay.textContent = '▶';
                 resumeBgMusicIfNeeded();
             });
 
-            // if user manually pauses the shared player, resume bg
+            
             player.addEventListener('pause', () => {
                 if (player.currentTime > 0 && !player.ended) {
                     resumeBgMusicIfNeeded();
                 }
             });
 
-            // expose selectRow for potential future use
+            /
             window.selectSongRow = selectRow;
         })();
     </script>
