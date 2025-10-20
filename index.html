@@ -70,15 +70,12 @@
             transform: translateY(20px);
             transition: transform 0.35s ease, opacity 0.35s ease;
         }
-        #secretMessage.show { transform: translateY(0); opacity: 1; }
-        .page {
-            display: none;
-            height: 100vh;
-            padding: 20px;
-            box-sizing: border-box;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
+        #secretMessage.show { 
+        display:block; 
+        opacity:1; 
+        transform:translateX(-50%) translateY(0); 
         }
+            
         .active {
             display: flex;
             flex-direction: column;
@@ -404,6 +401,12 @@
 
     <!-- Secret message -->
     <div id="secretMessage">💖 I Love You 💖</div>
+    const secretMessage = document.getElementById("secretMessage");
+    document.body.addEventListener("click", () => {
+    secretMessage.classList.add("show");
+    setTimeout(() => secretMessage.classList.remove("show"), 3000);
+    });
+
 
     <!-- Pages -->
     <!-- NEW: Intro / Get Ready page -->
