@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,12 +71,15 @@
             transform: translateY(20px);
             transition: transform 0.35s ease, opacity 0.35s ease;
         }
-        #secretMessage.show { 
-        display:block; 
-        opacity:1; 
-        transform:translateX(-50%) translateY(0); 
+        #secretMessage.show { transform: translateY(0); opacity: 1; }
+        .page {
+            display: none;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
-            
         .active {
             display: flex;
             flex-direction: column;
@@ -398,7 +402,8 @@
         <img src="images/2.gif" class="gif gif2" alt="Confetti GIF">
         <img src="images/3.gif" class="gif gif3" alt="Balloons GIF">
     </div>
-    <script>
+
+   <script>
 document.addEventListener("click", function(event) {
   const msg = document.createElement("div");
   msg.textContent = "I love you ❤️";
@@ -419,17 +424,13 @@ document.addEventListener("click", function(event) {
 
   setTimeout(() => {
     msg.style.opacity = "0";
-  }, 350);
+  }, 200);
 
   setTimeout(() => {
     msg.remove();
   }, 500);
 });
 </script>
-
-
-    <!-- Secret message -->
-    
 
 
     <!-- Pages -->
