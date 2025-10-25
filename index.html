@@ -398,14 +398,38 @@
         <img src="images/2.gif" class="gif gif2" alt="Confetti GIF">
         <img src="images/3.gif" class="gif gif3" alt="Balloons GIF">
     </div>
+    <script>
+document.addEventListener("click", function(event) {
+  const msg = document.createElement("div");
+  msg.textContent = "I love you ❤️";
+  msg.style.position = "absolute";
+  msg.style.left = event.pageX + "px";
+  msg.style.top = event.pageY + "px";
+  msg.style.transform = "translate(-50%, -50%)";
+  msg.style.background = "rgba(255, 255, 255, 0.9)";
+  msg.style.padding = "8px 12px";
+  msg.style.borderRadius = "10px";
+  msg.style.fontFamily = "Poppins, sans-serif";
+  msg.style.fontSize = "18px";
+  msg.style.fontWeight = "600";
+  msg.style.color = "#ff3366";
+  msg.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+  msg.style.transition = "opacity 0.3s ease";
+  document.body.appendChild(msg);
+
+  setTimeout(() => {
+    msg.style.opacity = "0";
+  }, 350);
+
+  setTimeout(() => {
+    msg.remove();
+  }, 500);
+});
+</script>
+
 
     <!-- Secret message -->
-    <div id="secretMessage">💖 I Love You 💖</div>
-    const secretMessage = document.getElementById("secretMessage");
-    document.body.addEventListener("click", () => {
-    secretMessage.classList.add("show");
-    setTimeout(() => secretMessage.classList.remove("show"), 3000);
-    });
+    
 
 
     <!-- Pages -->
